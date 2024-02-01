@@ -3,7 +3,7 @@ version: "3.7"
 services:
   db:
     container_name: mongo
-    image: mongo:6-jammy
+    image: mongo:4.2
     environment:
       - MONGO_INITDB_ROOT_USERNAME=tal      
       - MONGO_INITDB_ROOT_PASSWORD=tal
