@@ -11,7 +11,7 @@ async function run() {
 
     await client.connect();
     const database = client.db("database");
-    const clients_collection = database.collection("clients_test");
+    const clients_collection = database.collection("clients");
     const clients = await clients_collection.find().toArray();
 
     const nb_clients = await clients_collection.countDocuments();
