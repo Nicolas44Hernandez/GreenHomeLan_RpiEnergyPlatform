@@ -3,7 +3,7 @@ version: "3.7"
 services:
   db:
     container_name: mongo
-    image: mongo:4.2
+    image: mongodb-raspberrypi4-unofficial-r7.0.4
     environment:
       - MONGO_INITDB_ROOT_USERNAME=tal      
       - MONGO_INITDB_ROOT_PASSWORD=tal
