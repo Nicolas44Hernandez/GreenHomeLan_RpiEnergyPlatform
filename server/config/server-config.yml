@@ -1,0 +1,17 @@
+API_TITLE: SERVER API
+API_VERSION: v1
+
+# openapi.json version and URL prefix
+OPENAPI_VERSION: 3.0.3
+OPENAPI_URL_PREFIX: /
+
+# Enable swagger UI
+OPENAPI_SWAGGER_UI_PATH: /docs
+OPENAPI_SWAGGER_UI_URL: https://cdn.jsdelivr.net/npm/swagger-ui-dist/
+
+# MONGO CONFIG
+#MONGO_STR: mongodb+srv://n44hernandezp:WiGreen2024@cluster0.ydgbl9o.mongodb.net/?retryWrites=true&w=majority" # ATLAS
+MONGO_STR: mongodb://tal:tal@0.0.0.0:27017 # Docker
+MONGO_DB_NAME: database
+MONGO_CLIENTS_COLLECTION_NAME: clients
+

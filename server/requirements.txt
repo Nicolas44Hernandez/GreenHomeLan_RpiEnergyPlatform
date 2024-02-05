@@ -1,0 +1,4 @@
+flask==2.0.1
+flask-smorest==0.34.1
+PyYAML==6.0.1
+pymongo==4.6.1
