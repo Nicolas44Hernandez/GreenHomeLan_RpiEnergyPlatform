@@ -33,3 +33,11 @@ npm run build
 ```sh
 npm run lint
 ```
+
+
+### Dockerize vue application
+
+```sh
+cd web_app
+docker build -t energy-information-platform .
+```
