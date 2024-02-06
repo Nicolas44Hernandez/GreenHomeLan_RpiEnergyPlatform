@@ -35,6 +35,7 @@ import SelectPowerItem from './SelectPowerItem.vue'
 </template>
 <script>
 import config from '@/config.js';
+import axios from 'axios';
 
 export default {
   data() {
@@ -55,31 +56,46 @@ export default {
   methods: {
     getConfig() {
       // Geting zones from backend
-      //TODO: Get from backend
-      this.zone="Zone 1"
-      this.zones_list = ["Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zona x"]; 
+      const zonesUrl = `${config.BACKEND_URL}/zones`;
+      axios.get(zonesUrl)
+        .then(response => {          
+          let zones_array_str = response.data.zones.split("\'");
+          let zones_list = []
+          zones_array_str.forEach((element) => {
+            if(element.length > 2){
+              zones_list.push(element);
+            }
+          });
+
+          this.zones_list = zones_list;  
+          this.zone = this.zones_list[0];          
+        })
+        .catch(error => {
+          console.log(error);
+        });
       
-      // Geting energetician from database
-      //TODO: Get from backend
-      this.energetician="E1"
-      this.energeticians_list = ["E1", "E2", "E3"]; 
+      // Geting energetician from backend
+      const energeticiansUrl = `${config.BACKEND_URL}/energeticians`;
+      axios.get(energeticiansUrl)
+        .then(response => {          
+          let energeticians_array_str = response.data.energeticians.split("\'");
+          let energeticians_list = []
+          energeticians_array_str.forEach((element) => {
+            let ele = element.replace(" ", "");
+            if(ele.length > 1){
+              energeticians_list.push(ele);
+            }
+          });
+          this.energeticians_list = energeticians_list;  
+          this.enregetician = this.energeticians_list[0];          
+        })
+        .catch(error => {
+          console.log(error);
+        });
 
       // Geting powers from config
       this.powers_list = config.POWER_LIST;
       this.power=this.powers_list[0];
-
-      //console.log(config.CONFIGURATION_URL);
-      // axios.get(config.CONFIGURATION_URL)
-      //   .then(response => {
-      //     console.log("Configuration retreieved:");
-      //     this.pitches = response.data.pitches;
-      //     this.video = response.data.video;
-      //     console.log(response.data);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     // TODO: Handle errors
-      //   });
     },
     handleZoneSelectionChanged(newVal) {          
       this.zone = newVal;

@@ -1,6 +1,6 @@
 const config = {
     POWER_LIST: ["100%", "25%", "0%"],
-    MONGO_STR: "mongodb://tal:tal@0.0.0.0:27017",
+    BACKEND_URL: "http://localhost:5000",
   };
   
   export default config;

@@ -17,11 +17,11 @@
         </thead>
         <tbody>
           <tr v-for="client in clients" :key="client.id">
-            <td>{{ client.id }}</td>
+            <td>{{ client.client_id }}</td>
             <td>{{ client.zone }}</td>
             <td>{{ client.energetician }}</td>
             <td>{{ client.id_energetician }}</td>
-            <td>{{ client.class }}</td>
+            <td>{{ client.contract_class }}</td>
             <td>{{ client.fai }}</td>
             <td>{{ client.id_client_fai }}</td>
             <td>{{ client.name_client_fai }}</td>

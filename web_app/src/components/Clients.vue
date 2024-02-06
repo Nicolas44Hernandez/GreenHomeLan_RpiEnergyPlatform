@@ -8,6 +8,8 @@ import ClientsTable from './ClientsTable.vue'
   </div>
 </template>
 <script>
+import config from '@/config.js';
+import axios from 'axios';
 
 export default {
   data() {
@@ -23,94 +25,16 @@ export default {
   methods: {
     getClienstList() {
       // Geting clients list from backend
-      //TODO: Get from backend
-      this.clientList=[
-        { 
-          id: 1, 
-          zone: 'Zone 1',
-          energetician: 'E1',
-          id_energetician: '1',
-          class: '6KVA',
-          fai: 'Orange',
-          id_client_fai: '1',
-          name_client_fai: 'MyOrchestrator',
-          ip: '80.65.254.231',
-          port: '80',
-        },
-        { 
-          id: 2, 
-          zone: 'Zone 1',
-          energetician: 'E1',
-          id_energetician: '1',
-          class: '6KVA',
-          fai: 'Orange',
-          id_client_fai: '2',
-          name_client_fai: 'MyOrchestrator2',
-          ip: '80.65.254.232',
-          port: '80',
-        },
-        { 
-          id: 3, 
-          zone: 'Zone 2',
-          energetician: 'E1',
-          id_energetician: '1',
-          class: '6KVA',
-          fai: 'Orange',
-          id_client_fai: '3',
-          name_client_fai: 'MyOrchestrator3',
-          ip: '80.65.254.233',
-          port: '80',
-        },
-        { 
-          id: 4, 
-          zone: 'Zone 3',
-          energetician: 'E2',
-          id_energetician: '2',
-          class: '6KVA',
-          fai: 'Orange',
-          id_client_fai: '4',
-          name_client_fai: 'MyOrchestrator4',
-          ip: '80.65.254.234',
-          port: '80',
-        },
-        { 
-          id: 5, 
-          zone: 'Zone 1',
-          energetician: 'E1',
-          id_energetician: '1',
-          class: '6KVA',
-          fai: 'Orange',
-          id_client_fai: '5',
-          name_client_fai: 'MyOrchestrator5',
-          ip: '80.65.254.235',
-          port: '80',
-        },
-        { 
-          id: 6, 
-          zone: 'Zone 3',
-          energetician: 'E2',
-          id_energetician: '3',
-          class: '6KVA',
-          fai: 'Orange',
-          id_client_fai: '6',
-          name_client_fai: 'MyOrchestrator6',
-          ip: '80.65.254.236',
-          port: '80',
-        },
-      ]
-            
-      //console.log(config.CONFIGURATION_URL);
-      // axios.get(config.CONFIGURATION_URL)
-      //   .then(response => {
-      //     console.log("Configuration retreieved:");
-      //     this.pitches = response.data.pitches;
-      //     this.video = response.data.video;
-      //     console.log(response.data);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     // TODO: Handle errors
-      //   });
+      const url = `${config.BACKEND_URL}/clients`;
+      axios.get(url)
+        .then(response => {
+          console.log("Clients list retreived:");
+          console.log(response.data);
+          this.clientList = response.data;          
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
   }
 }
