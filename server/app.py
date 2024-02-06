@@ -5,9 +5,12 @@ from logging.config import dictConfig
 from os import path
 import yaml
 from flask import Flask
+from flask_cors import CORS
 from .managers.clients_manager import clients_manager_service
 
 from .rest_api.clients import bp as clients_manager_controler_bp
+from .rest_api.zones import bp as zones_manager_controler_bp
+from .rest_api.energeticians import bp as energeticians_manager_controler_bp
 from .extension import api
 from .common import ServerException, handle_server_exception
 
@@ -20,7 +23,8 @@ def create_app(
     """Create the Flask app"""
 
     # Create app Flask
-    app = Flask("Server Camera")
+    app = Flask("Server")
+    cors = CORS(app)
 
     # Get configuration files
     app_config = path.join(config_dir, "server-config.yml")
@@ -79,3 +83,5 @@ def register_blueprints(app: Flask):
     app.register_error_handler(ServerException, handle_server_exception)
     # Register REST blueprints
     api.register_blueprint(clients_manager_controler_bp)
+    api.register_blueprint(zones_manager_controler_bp)
+    api.register_blueprint(energeticians_manager_controler_bp)

@@ -59,8 +59,27 @@ class ClientsManager:
         except:
             raise ServerException(ErrorCode.MONGO_ERROR)
 
-        # Check if the collection exists
-
+    def get_zones_list(self):
+        """Retreive zones list from mongo"""
+        
+        # Retreive clients list
+        clients = self.get_clients_list()
+        zones = []
+        for client in clients:
+            if client["zone"] not in zones:
+                zones.append(client["zone"])
+        return zones
+    
+    def get_energeticians_list(self):
+        """Retreive energeticians list from mongo"""
+        
+        # Retreive clients list
+        clients = self.get_clients_list()
+        energeticians = []
+        for client in clients:
+            if client["energetician"] not in energeticians:
+                energeticians.append(client["energetician"])
+        return energeticians
 
 clients_manager_service: ClientsManager = ClientsManager()
 """ Clients manager service singleton"""

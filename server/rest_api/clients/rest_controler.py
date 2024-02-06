@@ -1,4 +1,4 @@
-""" REST controller for wifi connection status ressource """
+""" REST controller for clients ressource """
 import logging
 from flask.views import MethodView
 from flask_smorest import Blueprint
@@ -13,8 +13,8 @@ bp = Blueprint("clients", __name__, url_prefix="/clients")
 
 
 @bp.route("/")
-class ThreadNodesApi(MethodView):
-    """API to retrieve wifi connection status"""
+class ClientsApi(MethodView):
+    """API to retrieve clients list"""
 
     @bp.doc(responses={400: "BAD_REQUEST", 404: "NOT_FOUND"})
     @bp.response(status_code=200, schema=ClientSchema(many=True))
