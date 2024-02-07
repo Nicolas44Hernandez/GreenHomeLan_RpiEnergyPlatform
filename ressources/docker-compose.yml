@@ -7,12 +7,9 @@ services:
     restart: always
     depends_on:
       - mongodb
-    # ports:
-    #   - "5000:5000"
     networks: 
-      - eip-network
-  
-  #TODO:how to correct CORS error (temp running outside docker network)
+      - eip-network  
+
   energy-information-platform:
     image: energy-information-platform:latest
     depends_on:
@@ -22,7 +19,8 @@ services:
     links:
       - eip-backend
     ports:
-      - "8080:8080"
+      - "8080:80"
+
   mongodb:
     # image: mongodb-raspberrypi4-unofficial-r7.0.4
     image: mongo:6-jammy

@@ -11,7 +11,8 @@ OPENAPI_SWAGGER_UI_URL: https://cdn.jsdelivr.net/npm/swagger-ui-dist/
 
 # MONGO CONFIG
 #MONGO_STR: mongodb+srv://n44hernandezp:WiGreen2024@cluster0.ydgbl9o.mongodb.net/?retryWrites=true&w=majority" # ATLAS
-MONGO_STR: mongodb://tal:tal@0.0.0.0:27017 # Docker
+#MONGO_STR: mongodb://tal:tal@0.0.0.0:27017 # Local
+MONGO_STR: mongodb://tal:tal@mongodb:27017 # Docker container in docker compose
 MONGO_DB_NAME: database
 MONGO_CLIENTS_COLLECTION_NAME: clients
 
