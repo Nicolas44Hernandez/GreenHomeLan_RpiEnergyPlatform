@@ -25,7 +25,8 @@ export default {
   methods: {
     getClienstList() {
       // Geting clients list from backend
-      const url = `${config.BACKEND_URL}/clients`;
+      const url = `${config.BACKEND_URL}/clients/`;
+      //const url ='/clients'
       axios.get(url)
         .then(response => {
           console.log("Clients list retreived:");

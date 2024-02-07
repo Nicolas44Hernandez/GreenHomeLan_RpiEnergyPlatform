@@ -1,16 +1,38 @@
 version: "3.7"
 
 services:
-  db:
-    container_name: mongo
+  eip-backend:
+    image: eip-backend:latest
+    container_name: eip-backend
+    restart: always
+    depends_on:
+      - mongodb
+    # ports:
+    #   - "5000:5000"
+    networks: 
+      - eip-network
+  
+  #TODO:how to correct CORS error (temp running outside docker network)
+  energy-information-platform:
+    image: energy-information-platform:latest
+    depends_on:
+      - eip-backend
+    networks: 
+      - eip-network
+    links:
+      - eip-backend
+    ports:
+      - "8080:8080"
+  mongodb:
     # image: mongodb-raspberrypi4-unofficial-r7.0.4
     image: mongo:6-jammy
+    container_name: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=tal      
       - MONGO_INITDB_ROOT_PASSWORD=tal
       - MONGO_INITDB_DATABASE=clients
     networks: 
-      - mongo-compose-network
+      - eip-network
     ports:
       - '27017:27017'
     volumes:
@@ -26,11 +48,11 @@ services:
     container_name: mongo-express
     image: mongo-express
     depends_on:
-      - db
+      - mongodb
     networks: 
-      - mongo-compose-network
+      - eip-network
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_MONGODB_ADMINUSERNAME=tal
       - ME_CONFIG_MONGODB_ADMINPASSWORD=tal
       - ME_CONFIG_BASICAUTH_USERNAME=tal
@@ -45,5 +67,5 @@ volumes:
     name: MONGO_CONFIG
 
 networks:
-  mongo-compose-network:
+  eip-network:
     driver: bridge

@@ -56,7 +56,9 @@ export default {
   methods: {
     getConfig() {
       // Geting zones from backend
-      const zonesUrl = `${config.BACKEND_URL}/zones`;
+      const zonesUrl = `${config.BACKEND_URL}/zones/`;
+      //const zonesUrl = "/zones";
+      console.log('zonesUrl: ' + zonesUrl);
       axios.get(zonesUrl)
         .then(response => {          
           let zones_array_str = response.data.zones.split("\'");
@@ -75,7 +77,8 @@ export default {
         });
       
       // Geting energetician from backend
-      const energeticiansUrl = `${config.BACKEND_URL}/energeticians`;
+      const energeticiansUrl = `${config.BACKEND_URL}/energeticians/`;
+      //const energeticiansUrl='/energeticians';
       axios.get(energeticiansUrl)
         .then(response => {          
           let energeticians_array_str = response.data.energeticians.split("\'");
