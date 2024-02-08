@@ -105,5 +105,33 @@ class ClientsManager:
                 energeticians.append(client["energetician"])
         return energeticians
 
+    def create_database(self):
+        """Create database if doesnt exists"""
+
+        dblist = self.mongodb_client.list_database_names()
+        if self.db_name not in dblist:   
+            logger.info(f"Creatting database {self.db_name}")         
+            #Create database            
+        else:
+            logger.info(f"Database {self.db_name} already created") 
+        mydb = self.mongodb_client[self.db_name]  
+        
+                
+        collist = mydb.list_collection_names()
+        if self.clients_collection_name not in collist:
+            logger.info(f"Creatting collection {self.clients_collection_name}")
+            self.clients_collection = self.mongodb_client[self.db_name][self.clients_collection_name]
+    
+        # Return the number of clients in the colection
+        return self.clients_collection.count_documents({})
+
+    def insert_clients(self, clients):
+        """Create multiple clients in database"""
+        self.clients_collection.insert_many(clients)
+    
+    def delete_database(self):
+        """Drop collection and database"""
+        self.clients_collection.drop()
+
 clients_manager_service: ClientsManager = ClientsManager()
 """ Clients manager service singleton"""
