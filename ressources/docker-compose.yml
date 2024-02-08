@@ -27,8 +27,8 @@ services:
       - "8080:80"
 
   mongodb:
-    # image: mongodb-raspberrypi4-unofficial-r7.0.4
-    image: mongo:6-jammy
+    image: mongodb-raspberrypi4-unofficial-r7.0.4
+    #image: mongo:6-jammy
     container_name: mongo
     restart: always
     environment:
