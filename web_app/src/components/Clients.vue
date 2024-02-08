@@ -8,7 +8,6 @@ import ClientsTable from './ClientsTable.vue'
   </div>
 </template>
 <script>
-import config from '@/config.js';
 import axios from 'axios';
 
 export default {
@@ -25,8 +24,7 @@ export default {
   methods: {
     getClienstList() {
       // Geting clients list from backend
-      const url = `${config.BACKEND_URL}/clients/`;
-      //const url ='/clients'
+      const url ='/api/clients'
       axios.get(url)
         .then(response => {
           console.log("Clients list retreived:");

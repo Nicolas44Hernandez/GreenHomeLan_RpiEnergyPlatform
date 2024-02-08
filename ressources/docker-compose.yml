@@ -2,15 +2,20 @@ version: "3.7"
 
 services:
   eip-backend:
+    build: ../backend/
+    restart: always
     image: eip-backend:latest
     container_name: eip-backend
-    restart: always
+    ports:
+      - "5000:5000"
     depends_on:
       - mongodb
     networks: 
       - eip-network  
 
   energy-information-platform:
+    build: ../web_app/
+    restart: always
     image: energy-information-platform:latest
     depends_on:
       - eip-backend
@@ -25,14 +30,15 @@ services:
     # image: mongodb-raspberrypi4-unofficial-r7.0.4
     image: mongo:6-jammy
     container_name: mongo
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=tal      
       - MONGO_INITDB_ROOT_PASSWORD=tal
       - MONGO_INITDB_DATABASE=clients
     networks: 
       - eip-network
-    ports:
-      - '27017:27017'
+    expose: 
+      - '27017'
     volumes:
       - type: volume
         source: MONGO_DATA
@@ -44,6 +50,7 @@ services:
   
   mongo-express:
     container_name: mongo-express
+    restart: always
     image: mongo-express
     depends_on:
       - mongodb

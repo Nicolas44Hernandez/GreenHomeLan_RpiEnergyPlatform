@@ -8,7 +8,7 @@ from .rest_model import ClientSchema
 
 logger = logging.getLogger(__name__)
 
-bp = Blueprint("clients", __name__, url_prefix="/clients")
+bp = Blueprint("clients", __name__, url_prefix="/api/clients")
 """ The api blueprint. Should be registered in app main api object """
 
 

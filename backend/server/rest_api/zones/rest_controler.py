@@ -8,7 +8,7 @@ from .rest_model import ZonesSchema
 
 logger = logging.getLogger(__name__)
 
-bp = Blueprint("zones", __name__, url_prefix="/zones")
+bp = Blueprint("zones", __name__, url_prefix="/api/zones")
 """ The api blueprint. Should be registered in app main api object """
 
 

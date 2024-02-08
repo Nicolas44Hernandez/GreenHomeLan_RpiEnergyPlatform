@@ -8,7 +8,7 @@ from .rest_model import EnergeticiansSchema
 
 logger = logging.getLogger(__name__)
 
-bp = Blueprint("energeticians", __name__, url_prefix="/energeticians")
+bp = Blueprint("energeticians", __name__, url_prefix="/api/energeticians")
 """ The api blueprint. Should be registered in app main api object """
 
 
