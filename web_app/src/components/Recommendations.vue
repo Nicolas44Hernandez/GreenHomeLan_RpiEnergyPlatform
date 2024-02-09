@@ -36,6 +36,7 @@ import SelectPowerItem from './SelectPowerItem.vue'
 <script>
 import config from '@/config.js';
 import axios from 'axios';
+import qs from 'qs';
 
 export default {
   data() {
@@ -56,6 +57,7 @@ export default {
   methods: {
     getConfig() {
       // Geting zones from backend
+      //const zonesUrl ='http://localhost:5000/api/zones'
       const zonesUrl = "/api/zones";
       console.log('zonesUrl: ' + zonesUrl);
       axios.get(zonesUrl)
@@ -76,6 +78,7 @@ export default {
         });
       
       // Geting energetician from backend
+      //const energeticiansUrl ='http://localhost:5000/api/energeticians'
       const energeticiansUrl='/api/energeticians';
       axios.get(energeticiansUrl)
         .then(response => {          
@@ -88,7 +91,7 @@ export default {
             }
           });
           this.energeticians_list = energeticians_list;  
-          this.enregetician = this.energeticians_list[0];          
+          this.energetician = this.energeticians_list[0];  
         })
         .catch(error => {
           console.log(error);
@@ -97,6 +100,22 @@ export default {
       // Geting powers from config
       this.powers_list = config.POWER_LIST;
       this.power=this.powers_list[0];
+    },
+    sendRecommendations(power) {
+      // Geting clients to aply recommendation
+      // const url ='http://localhost:5000/api/clients'
+      const url ='/api/clients';
+      axios.get(url)
+        .then(response => {
+          response.data.forEach((client) => {
+            if((this.zone == client.zone)&&(this.energetician == client.energetician)){
+              this.sendRecommendation(client.ip, client.port, client.zone, client.energetician, client.contract_class, power);
+            }
+          }); 
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     handleZoneSelectionChanged(newVal) {          
       this.zone = newVal;
@@ -115,12 +134,55 @@ export default {
     },
     onClick100(){
       console.log("onClick100");
+      this.sendRecommendations("100");
     },
     onClick25(){
       console.log("onClick25");
+      this.sendRecommendations("25");
     },
     onClick0(){
       console.log("onClick0");
+      this.sendRecommendations("0");
+    },
+    sendRecommendation(client_ip, port, zone, energetician, contract_class, power){
+
+      const client_url = `http://${client_ip}:${port}`;
+      console.log("Sending recommendation to: "+ client_url + "  power: " + power);
+
+      //Get current datetime
+      const now = new Date()
+      const now_str = now.toISOString()      
+
+      // Get end datetime
+      //TODO: add picker
+      const end = new Date(now.setMinutes(now.getMinutes() + 3));
+      const end_str = end.toISOString()      
+      //const test_ip = "http://192.168.1.19:5000"  //eth
+      //const test_ip = "http://192.168.102.21:5000"  //wifi 
+      
+      const data = {
+        id_zone: zone,
+        recomendation_datetime: now_str,
+        msg_title: "Recomendation",
+        power: power,
+        //start_datetime: now_str,
+        sender: "PIE",
+        id_energy_supplier: energetician,
+        //end_datetime: end_str,
+        msg_id: "001",
+        recommendation_class: contract_class,
+      };
+      const queryString = qs.stringify(data);
+      const url = `${client_url}/energy_recomendations?${queryString}`;
+      console.log(url);
+      axios.post(url)
+        .then(response => {          
+          console.log("recommendation sent");
+        })
+        .catch(error => {
+          console.log(error);
+          // TODO: Handle errors
+        });
     }
   }
 }

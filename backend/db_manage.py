@@ -8,6 +8,18 @@ cli = FlaskGroup(create_app=create_app)
 DEFAULT_CLIENTS = [
     {
         "client_id": '1',
+        "zone": '35NNE',
+        "energetician": 'E1',
+        "id_energetician": '1',
+        "contract_class": '6KVA',
+        "fai": 'Orange',
+        "id_client_fai": '1',
+        "name_client_fai": 'MyOrchestrator',
+        "ip": '192.168.1.19',
+        "port": '5000'
+    },
+    {
+        "client_id": '2',
         "zone": 'Zone 1',
         "energetician": 'E1',
         "id_energetician": '1',
@@ -19,7 +31,7 @@ DEFAULT_CLIENTS = [
         "port": '80'
     },
     {
-        "client_id": '2',
+        "client_id": '3',
         "zone": 'Zone 1',
         "energetician": 'E1',
         "id_energetician": '2',
@@ -31,7 +43,7 @@ DEFAULT_CLIENTS = [
         "port": '80'
     },
     {
-        "client_id": '3',
+        "client_id": '4',
         "zone": 'Zone 2',
         "energetician": 'E2',
         "id_energetician": '1',
@@ -43,7 +55,7 @@ DEFAULT_CLIENTS = [
         "port": '80'
     },
     {
-        "client_id": '4',
+        "client_id": '5',
         "zone": 'Zone 3',
         "energetician": 'E1',
         "id_energetician": '3',
@@ -55,7 +67,7 @@ DEFAULT_CLIENTS = [
         "port": '80'
     },
     {
-        "client_id": '5',
+        "client_id": '6',
         "zone": 'Zone 4',
         "energetician": 'E1',
         "id_energetician": '4',

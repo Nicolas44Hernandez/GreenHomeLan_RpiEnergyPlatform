@@ -13,3 +13,7 @@ Energy platform to send energy recommendations to orchestrators
 ```sudo service nginx restart``` 
 6. Run docker compose
 ```docker compose up -d```
+7. Create and seed database
+```docker exec -it eip-backend sh -c "python db_manage.py create"```
+8. Delete database
+```docker exec -it eip-backend sh -c "python db_manage.py delete"```
