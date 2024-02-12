@@ -90,6 +90,19 @@ DEFAULT_CLIENTS = [
         "ip": '192.168.1.49',
         "port": '5000'
     },
+    {
+        "client_id": '8',
+        "zone": 'LM48_ORCH1',
+        "energetician": 'E1',
+        "id_energetician": '6',
+        "contract_class": '6KVA',
+        "fai": 'Orange',
+        "id_client_fai": '8',
+        "name_client_fai": 'MyOrchestrator',
+        "ip": '192.168.1.12',
+        "port": '5000'
+    },
+    
 ]
 
 @cli.command('create')
