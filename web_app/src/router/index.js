@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import EnergyInformationPlatform from '../views/EnergyInformationPlatform.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: EnergyInformationPlatform
+      component: () => import('../views/EnergyInformationPlatform.vue') 
     },
     {
       path: '/about',
