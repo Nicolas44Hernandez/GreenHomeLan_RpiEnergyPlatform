@@ -1,7 +1,6 @@
 <script setup>
 import SelectZoneItem from './SelectZoneItem.vue'
 import SelectEnergeticianItem from './SelectEnergeticianItem.vue'
-import SelectPowerItem from './SelectPowerItem.vue'
 </script>
 <template>  
 <div class="buttons-container">
@@ -30,11 +29,9 @@ import SelectPowerItem from './SelectPowerItem.vue'
 <div class="selection-container">
   <SelectZoneItem @zone-changed="handleZoneSelectionChanged" :zones=zones_list :selected-zone=zone></SelectZoneItem>
   <SelectEnergeticianItem @energetician-changed="handleEnergeticianSelectionChanged" :energeticians=energeticians_list :selected-energetician=energetician></SelectEnergeticianItem>
-  <SelectPowerItem @power-changed="handlePowerSelectionChanged" :powers=powers_list :selected-power=power></SelectPowerItem>
 </div> 
 </template>
 <script>
-import config from '@/config.js';
 import axios from 'axios';
 import qs from 'qs';
 
@@ -45,8 +42,6 @@ export default {
       zones_list: [],
       energetician:"",
       energeticians_list: [],
-      power:"",
-      powers_list: [],
     };
   },
   mounted() {
@@ -96,14 +91,10 @@ export default {
         .catch(error => {
           console.log(error);
         });
-
-      // Geting powers from config
-      this.powers_list = config.POWER_LIST;
-      this.power=this.powers_list[0];
     },
     sendRecommendations(power) {
       // Geting clients to aply recommendation
-      // const url ='http://localhost:5000/api/clients'
+      //const url ='http://localhost:5000/api/clients'
       const url ='/api/clients';
       axios.get(url)
         .then(response => {
@@ -126,11 +117,6 @@ export default {
       this.energetician = newVal;
       console.log("Energetician selection has changed");  
       console.log(this.energetician);
-    },
-    handlePowerSelectionChanged(newVal) {          
-      this.power = newVal;
-      console.log("Power selection has changed");  
-      console.log(this.power);
     },
     onClick100(){
       console.log("onClick100");
