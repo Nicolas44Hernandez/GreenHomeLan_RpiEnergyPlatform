@@ -44,7 +44,7 @@ class AdminAuth():
         token = jwt.encode({
             'sub': user_email,
             'iat':datetime.utcnow(),
-            'exp': datetime.utcnow() + timedelta(seconds=10)},
+            'exp': datetime.utcnow() + timedelta(hours=5)},
             AdminAuth.secret_key,
             algorithm="HS256",
         )
