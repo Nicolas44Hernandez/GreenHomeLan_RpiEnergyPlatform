@@ -52,10 +52,10 @@ export default {
   methods: {
     getConfig() {
       // Geting zones from backend
-      //const zonesUrl ='http://localhost:5000/api/zones'
-      const zonesUrl = "/api/zones";
-      console.log('zonesUrl: ' + zonesUrl);
-      axios.get(zonesUrl)
+      //const zonesUrl ='http://localhost:5000/api/zones/'
+      const zonesUrl = "/api/zones/";
+      const jwt = JSON.parse(localStorage.getItem("user-info")).token;      
+      axios.get(zonesUrl, { headers: { Authorization: `Bearer: ${jwt}` } })
         .then(response => {          
           let zones_array_str = response.data.zones.split("\'");
           let zones_list = []
@@ -70,12 +70,13 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          this.inValidToken(error);
         });
       
       // Geting energetician from backend
-      //const energeticiansUrl ='http://localhost:5000/api/energeticians'
-      const energeticiansUrl='/api/energeticians';
-      axios.get(energeticiansUrl)
+      //const energeticiansUrl ='http://localhost:5000/api/energeticians/'
+      const energeticiansUrl='/api/energeticians/';
+      axios.get(energeticiansUrl, { headers: { Authorization: `Bearer: ${jwt}` } })
         .then(response => {          
           let energeticians_array_str = response.data.energeticians.split("\'");
           let energeticians_list = []
@@ -90,6 +91,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          this.inValidToken(error);
         });
     },
     sendRecommendations(power) {
@@ -106,6 +108,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          this.inValidToken(error);
         });
     },
     handleZoneSelectionChanged(newVal) {          
@@ -167,9 +170,13 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          // TODO: Handle errors
+          this.inValidToken(error);
         });
-    }
+    },
+    inValidToken(msg){
+        localStorage.clear();
+        this.$router.push({name: "login"});
+    }, 
   }
 }
 </script>
