@@ -16,3 +16,7 @@ MONGO_STR: mongodb://tal:tal@mongodb:27017 # Docker container in docker compose
 MONGO_DB_NAME: database
 MONGO_CLIENTS_COLLECTION_NAME: clients
 
+# ADMIN AUTH CONFIG
+ADMIN_EMAIL: wigreen@orange.com
+ADMIN_PASSWORD: wigreen
+SECRET_KEY: key

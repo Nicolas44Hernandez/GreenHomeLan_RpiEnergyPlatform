@@ -2,6 +2,7 @@
 import logging
 from flask.views import MethodView
 from flask_smorest import Blueprint
+from server.common.authentication.service import token_required
 from server.managers.clients_manager import clients_manager_service
 from .rest_model import ZonesSchema
 
@@ -16,6 +17,7 @@ bp = Blueprint("zones", __name__, url_prefix="/api/zones")
 class ZonesApi(MethodView):
     """API to retrieve zones list"""
 
+    @token_required
     @bp.doc(responses={400: "BAD_REQUEST", 404: "NOT_FOUND"})
     @bp.response(status_code=200, schema=ZonesSchema)
     def get(self):

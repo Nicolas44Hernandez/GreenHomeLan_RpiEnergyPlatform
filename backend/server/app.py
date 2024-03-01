@@ -11,8 +11,9 @@ from .managers.clients_manager import clients_manager_service
 from .rest_api.clients import bp as clients_manager_controler_bp
 from .rest_api.zones import bp as zones_manager_controler_bp
 from .rest_api.energeticians import bp as energeticians_manager_controler_bp
+from .rest_api.authentication import bp as authentication_controler_bp
 from .extension import api
-from .common import ServerException, handle_server_exception
+from .common import ServerException, handle_server_exception, AdminAuth
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +41,9 @@ def create_app(
     # Load configuration
     app.config.from_file(app_config, load=yaml.full_load)
 
+    # Create Admin 
+    register_admin_auth(app)
+
     # Register extensions
     register_extensions(app)
     # Register blueprints for REST API
@@ -48,6 +52,9 @@ def create_app(
 
     return app
 
+def register_admin_auth(app: Flask):
+    """Register admin authentification"""
+    AdminAuth.create_admin(email=app.config["ADMIN_EMAIL"],password=app.config["ADMIN_PASSWORD"], secret_key=app.config["SECRET_KEY"])
 
 def register_extensions(app: Flask):
     """Initialize all extensions"""
@@ -66,8 +73,13 @@ def register_extensions(app: Flask):
             "info": {"description": "`Server Camera` OpenAPI 3.0 specification."},
             "components": {
                 "securitySchemes": {
-                    "basicAuth": {"type": "http", "scheme": "basic"},
                     "tokenAuth": {"type": "http", "scheme": "bearer"},
+                    'apikey': {
+                        'type': 'apiKey',
+                        'in': 'header',
+                        'name': 'Authorization',
+                        'description': "Type in the *'Value'* input box below: **'Bearer &lt;JWT&gt;'**, where JWT is the token"
+                    },
                 },
             },
         },
@@ -85,3 +97,4 @@ def register_blueprints(app: Flask):
     api.register_blueprint(clients_manager_controler_bp)
     api.register_blueprint(zones_manager_controler_bp)
     api.register_blueprint(energeticians_manager_controler_bp)
+    api.register_blueprint(authentication_controler_bp)  
