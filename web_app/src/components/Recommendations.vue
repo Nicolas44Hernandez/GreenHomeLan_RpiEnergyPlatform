@@ -96,9 +96,10 @@ export default {
     },
     sendRecommendations(power) {
       // Geting clients to aply recommendation
-      //const url ='http://localhost:5000/api/clients'
-      const url ='/api/clients';
-      axios.get(url)
+      //const url ='http://localhost:5000/api/clients/'
+      const url ='/api/clients/';
+      const jwt = JSON.parse(localStorage.getItem("user-info")).token;      
+      axios.get(url, { headers: { Authorization: `Bearer: ${jwt}` } })
         .then(response => {
           response.data.forEach((client) => {
             if((this.zone == client.zone)&&(this.energetician == client.energetician)){
